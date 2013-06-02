@@ -5,8 +5,8 @@
 int main(){
 	char str1[] = "Happy Birthday";
 	char str2[] = "Panda";
-	totallyNotStrcopy(str1, str2);
-	printf("%s", str1);
+	printf("1 for error: %d", totallyNotStrcopy(str1, str2));
+	printf("%s\n", str1);
 	return 0;
 }
 
