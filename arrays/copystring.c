@@ -1,7 +1,9 @@
 //implement a function that does the same thing as strcopy
 
 int main(){
-	
+	char str1[] = "Happy Birthday";
+	char str2[] = "Panda";
+	totallyNotStrcopy(str1, str2);
 	return 0;
 }
 
