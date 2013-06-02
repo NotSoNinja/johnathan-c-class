@@ -47,5 +47,5 @@ void printArray(int toPrint[], int size){
 	for(index = 0; index < size - 1; index++){	
 		printf("%d, ", toPrint[index]);
 	}
-	printf("%d\n" toPrint[index]);
+	printf("%d\n", toPrint[index]);
 }
