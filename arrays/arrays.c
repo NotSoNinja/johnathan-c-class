@@ -43,7 +43,7 @@ int main(){
 	print1DIntArray(arr2, TOAD);
 	const int X = 5;
 	const int Y = 7;
-	char art[X][Y] = {{'H','H','H','H','H','H','H'},{' ',' ',' ','H',' ',' ',' '},{' ',' ',' ','H',' ',' ',' '},{' ',' ',' ','H',' ',' ',' '},{'H','H','H','H','H','H','H'}};
+	char art[5][7] = {{'H','H','H','H','H','H','H'},{' ',' ',' ','H',' ',' ',' '},{' ',' ',' ','H',' ',' ',' '},{' ',' ',' ','H',' ',' ',' '},{'H','H','H','H','H','H','H'}};
 	print2DCharArray(X, Y, art);
 }
 
@@ -64,4 +64,5 @@ void print2DCharArray(int x, int y, char toPrint[x][y]){
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
