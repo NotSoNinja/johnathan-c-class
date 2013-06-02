@@ -9,7 +9,7 @@
 
 void print2DCharArray(int x, int y, char [x][y]); //does what it says it does
 
-void main(){
+int main(){
 	char board[ySize][xSize];
 	const char A = '+'; //the black squares
 	const char B = ' '; // the white squares
@@ -25,10 +25,10 @@ void main(){
 			if(newline == 1){ //if this is the first character on a line
 				if(lastLine == A){ //if the previous line started with B, it starts this one with A, etc.
 					board[yIndex][xIndex] = B;
-					last = lastLine = B;
+					lastChar = lastLine = B;
 				}else if(lastLine == B){
 					board[yIndex][xIndex] = A;
-					last = lastLine = A;
+					lastChar = lastLine = A;
 				}else{ // in chase things go way wrong.
 					break;
 				}
@@ -37,10 +37,10 @@ void main(){
 			}else{ // if it isn't the first character on a line, basically the same thing
 				if(last == A){
 					board[yIndex][xIndex] = B;
-					last = B;
+					lastChar = B;
 				}else if(last == B){
 					board[yIndex][xIndex] = A;
-					last = A;
+					lastChar = A;
 				}else{
 					break;
 				}
@@ -49,6 +49,8 @@ void main(){
 		newline = 1;
 	}
 	print2DCharArray(xSize, ySize, board);
+	
+	return 0;
 }
 
 void print2DCharArray(int x, int y, char toPrint[x][y]){
