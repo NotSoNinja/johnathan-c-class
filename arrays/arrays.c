@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <string.h>
 
+void printArray(int [], int);
+
 int main(){
 	const int TOAD = 1000;
 	char str1[] = {"This is a string."};
