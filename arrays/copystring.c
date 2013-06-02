@@ -6,7 +6,7 @@ int main(){
 	char str1[] = "Happy Birthday";
 	char str2[] = "Panda";
 	totallyNotStrcopy(str1, str2);
-	printf("%s"str1);
+	printf("%s", str1);
 	return 0;
 }
 
