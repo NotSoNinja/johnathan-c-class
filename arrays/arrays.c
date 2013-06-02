@@ -26,5 +26,23 @@ int main(){
 	for(index = 0; index < TOAD; index++){
 		res += arr1[index];
 	}
+	
+	int count = 0;
+	int arr2[TOAD];
+	for(index = TOAD - 1; index >=0; index--){
+		arr2[count] = arr1[index];
+		count++;
+	}
+	
 	printf("Second use: the sum of the numbers 0-9: %d\n", res);
+	
+	printArray(arr1, TOAD);
+	printArray(arr2, TOAD);
+}
+
+void printArray(int toPrint[], int size){
+	int index; 
+	for(index = 0; index < size; index++){	
+		printf("%d, "toPrint[index]);
+	}
 }
