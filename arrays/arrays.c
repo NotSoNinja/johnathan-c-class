@@ -11,6 +11,7 @@
 #include <string.h>
 
 void printArray(int [], int);
+void print2DCharArray(int x, int y, char [x][y]);
 
 int main(){
 	const int TOAD = 1000;
@@ -38,14 +39,29 @@ int main(){
 	
 	printf("Second use: the sum of the numbers 0-9: %d\n", res);
 	
-	printArray(arr1, TOAD);
-	printArray(arr2, TOAD);
+	print1DIntArray(arr1, TOAD);
+	print1DIntArray(arr2, TOAD);
+	const int X = 5;
+	const int Y = 7;
+	char art[][] = {{'H','H','H','H','H','H','H'},{' ',' ',' ','H',' ',' ',' '},{' ',' ',' ',H,' ',' ',' '},{' ',' ',' ','H',' ',' ',' '},{'H','H','H','H','H','H','H'}};
+	
 }
 
-void printArray(int toPrint[], int size){
+void print1DIntArray(int toPrint[], int size){
 	int index; 
 	for(index = 0; index < size - 1; index++){	
 		printf("%d, ", toPrint[index]);
 	}
 	printf("%d\n", toPrint[index]);
+}
+
+void print2DCharArray(int x, int y, char toPrint[x][y]){
+	int xIndex;
+	int yIndex;
+	for(yIndex = 0; yIndex < y; yIndex++){
+		for(xIndex = 0; xIndex < x; xIndex++){
+			printf("%c", toPrint[xIndex][yIndex]);
+		}
+		printf("\n");
+	}
 }
