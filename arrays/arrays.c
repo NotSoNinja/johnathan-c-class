@@ -11,13 +11,19 @@
 #include <string.h>
 
 int main(){
+	const int TOAD = 1000;
 	char str1[] = {"This is a string."};
 	printf("First use of arrays: %s\n", str1);
 	
-	int arr1[] = {0,1,2,3,4,5,6,7,8,9};
-	int res = 0;
 	int index;
-	for(index = 0; index < 10; index++){
+	int arr1[TOAD];
+	for(index = 0; index < TOAD; index++){
+		arr1[index] = index + 1;
+	}
+	
+	int res = 0;
+	
+	for(index = 0; index < TOAD; index++){
 		res += arr1[index];
 	}
 	printf("Second use: the sum of the numbers 0-9: %d\n", res);
