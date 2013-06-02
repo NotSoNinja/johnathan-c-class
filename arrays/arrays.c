@@ -43,6 +43,6 @@ int main(){
 void printArray(int toPrint[], int size){
 	int index; 
 	for(index = 0; index < size; index++){	
-		printf("%d, "toPrint[index]);
+		printf("%d, ", toPrint[index]);
 	}
 }
