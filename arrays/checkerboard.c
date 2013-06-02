@@ -35,10 +35,10 @@ int main(){
 				newline = 0;
 			
 			}else{ // if it isn't the first character on a line, basically the same thing
-				if(last == A){
+				if(lastChar == A){
 					board[yIndex][xIndex] = B;
 					lastChar = B;
-				}else if(last == B){
+				}else if(lastChar == B){
 					board[yIndex][xIndex] = A;
 					lastChar = A;
 				}else{
