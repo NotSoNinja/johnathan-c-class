@@ -1,5 +1,4 @@
 #include "ll.h"
-#include <stdio.h>
 
 LinkedList *newLLItem() {
 	LinkedList *this = malloc(sizeof(LinkedList));
@@ -15,7 +14,6 @@ LinkedList *addLLItem(LinkedList *head, void *data) {
 	if (last) {
 		last->next = curr;
 	} else {
-		printf("head was null\n");
 		last = head = curr;
 	}
 	curr->data = data;
