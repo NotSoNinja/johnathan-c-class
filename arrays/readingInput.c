@@ -6,7 +6,7 @@ char num[100];
 
 int main(){
 	
-	printf("Enter some text: ");
+	printf("\nEnter some text: ");
 	fgets(str, sizeof(str), stdin);
 	
 	printf("Enter up to four numbers: ");
@@ -44,5 +44,5 @@ int main(){
 	for(i = 0; i < 200; i++){
 		sum += (int) whole[i];
 	}
-	printf("Your two strings as a different number: %ld\n", sum);
+	printf("Your two strings as a different number: %ld\n\n", sum);
 }
