@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 int main(){
-	char str1[] = "Happy Birthday";
-	char str2[] = "Panda";
+	char str1[] = "Happy";
+	char str2[] = "Sad Panda";
 	printf("1 for error: %d\n", totallyNotStrcopy(str1, str2));
 	printf("%s\n", str1);
 	return 0;
@@ -31,6 +31,7 @@ int totallyNotStrcopy(char a[], char b[]){
 	}
 	bLength = index + 1;
 	
+	//either copies, or returns an error if incompatible
 	if(bLength > aLength){
 		return 1;
 	}else{
