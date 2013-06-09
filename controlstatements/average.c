@@ -29,26 +29,49 @@ int main(){
 	
 	/* switches on number of spaces to decide which sscanf version to use */
 	int numbers[50];	/* the numbers to be averaged */
-	switch (spaces){
-		case 0:
-			sscanf(input, "%d", &numbers[0]);
-			break;
-		case 1:
-			sscanf(input, "%d %d", &numbers[0], &numbers[1]);
-			break;
-		case 2:
-			sscanf(input, "%d %d %d", &numbers[0], &numbers[1], &numbers[2]);
-			break;
-		case 3:
-			sscanf(input, "%d %d %d %d", &numbers[0], &numbers[1], &numbers[2], &numbers[3]);
-			break;
-		case 4:
-			sscanf(input, "%d %d %d %d %d", &numbers[0], &numbers[1], &numbers[2], &numbers[3], &numbers[4]);
-			break;
-		default:
-			printf("Either you entered too many numbers, or something went way wrong.");
-			break;
+	int j; 				/* loop variable for removing used part */
+	int k;				/* another counter - allows me not to mess with i when removing used wtuff*/
+	int l = 0;			/* another counter - again a replacement for i, when giving a thing its own string*/
+	char readin[10];
+	/* runs this sequence for each number*/
+	for(i = 0; i <= (spaces + 1); i++){
+		/* takes the first number and gives it its own string */
+		while(input[l] != ' '){
+			readin[l] = input[l];
+		}
+		/* sets count variables for next part */
+		l = 0;
+		k = i;
+		/* removes the used part of input */
+		for(j = 0; j < (sizeof(input) - i); j++){
+			input[j] = input[k];
+			k++;
+		}
+		/* adds the number to numbers */
+		sscanf(readin, "%d", &numbers[i]);
+		
 	}
+
+	// switch (spaces){
+	// 	case 0:
+	// 		sscanf(input, "%d", &numbers[0]);
+	// 		break;
+	// 	case 1:
+	// 		sscanf(input, "%d %d", &numbers[0], &numbers[1]);
+	// 		break;
+	// 	case 2:
+	// 		sscanf(input, "%d %d %d", &numbers[0], &numbers[1], &numbers[2]);
+	// 		break;
+	// 	case 3:
+	// 		sscanf(input, "%d %d %d %d", &numbers[0], &numbers[1], &numbers[2], &numbers[3]);
+	// 		break;
+	// 	case 4:
+	// 		sscanf(input, "%d %d %d %d %d", &numbers[0], &numbers[1], &numbers[2], &numbers[3], &numbers[4]);
+	// 		break;
+	// 	default:
+	// 		printf("Either you entered too many numbers, or something went way wrong.");
+	// 		break;
+	// }
 	//printf("## The numbers in numbers: %d %d %d %d %d %d\n", numbers[0], numbers[1], numbers[2], numbers[3], numbers[4], numbers[5]);
 	
 	/* gets the average */
