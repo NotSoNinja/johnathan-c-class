@@ -56,29 +56,6 @@ int main(){
 		sscanf(readin, "%d", &numbers[i]);
 		
 	}
-
-	// switch (spaces){
-	// 	case 0:
-	// 		sscanf(input, "%d", &numbers[0]);
-	// 		break;
-	// 	case 1:
-	// 		sscanf(input, "%d %d", &numbers[0], &numbers[1]);
-	// 		break;
-	// 	case 2:
-	// 		sscanf(input, "%d %d %d", &numbers[0], &numbers[1], &numbers[2]);
-	// 		break;
-	// 	case 3:
-	// 		sscanf(input, "%d %d %d %d", &numbers[0], &numbers[1], &numbers[2], &numbers[3]);
-	// 		break;
-	// 	case 4:
-	// 		sscanf(input, "%d %d %d %d %d", &numbers[0], &numbers[1], &numbers[2], &numbers[3], &numbers[4]);
-	// 		break;
-	// 	default:
-	// 		printf("Either you entered too many numbers, or something went way wrong.");
-	// 		break;
-	// }
-	//printf("## The numbers in numbers: %d %d %d %d %d %d\n", numbers[0], numbers[1], numbers[2], numbers[3], numbers[4], numbers[5]);
-	
 	/* gets the average */
 	float average = 0;
 	i = 0;
@@ -92,5 +69,5 @@ int main(){
 	
 	/* returns and prints the result */
 	printf("The average of your %d numbers is: %f.\n", (spaces + 1), average);
-	return average;
+	return 0;
 }
