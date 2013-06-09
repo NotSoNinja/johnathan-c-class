@@ -25,37 +25,16 @@ int main(){
 		}
 	}
 	
-	//printf("## spaces = %d\n", spaces);
-	
-	/* switches on number of spaces to decide which sscanf version to use */
-	int numbers[50];	/* the numbers to be averaged */
-	int j; 				/* loop variable for removing used part */
-	int k;				/* another counter - allows me not to mess with i when removing used wtuff*/
-	int l = 0;			/* another counter - again a replacement for i, when giving a thing its own string*/
-	char readin[10];
-	/* runs this sequence for each number*/
-	for(i = 0; i <= (spaces + 1); i++){
-		/* takes the first number and gives it its own string */
-		// printf("## i: %d\n", i);
-		while(input[l] != ' '){
-			readin[l] = input[l];
-			// printf("## l: %d\n", l);
-			l++;
+	int numbers[51];	/* the numbers to be averaged */
+	int index = 0;			/* index of numbers*/
+	for(i = strlen(input); i >= 0; i--){
+		if(input[i] == ' '){
+			sscanf(input+i, "%d", &numbers[index]);
+			index++;
+			input[i] = '\0';
 		}
-		/* sets count variables for next part */
-		l = 0;
-		k = i;
-		/* removes the used part of input */
-		for(j = 0; j < (sizeof(input) - i); j++){
-			input[j] = input[k];
-			// printf("## j: %d\n", j);
-			// 		printf("## k: %d\n", k);
-			k++;
-		}
-		/* adds the number to numbers */
-		sscanf(readin, "%d", &numbers[i]);
-		
 	}
+	
 	/* gets the average */
 	float average = 0;
 	i = 0;
