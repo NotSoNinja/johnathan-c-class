@@ -36,8 +36,11 @@ int main(){
 	/* runs this sequence for each number*/
 	for(i = 0; i <= (spaces + 1); i++){
 		/* takes the first number and gives it its own string */
+		printf("## i: %d\n", i);
 		while(input[l] != ' '){
 			readin[l] = input[l];
+			printf("## l: %d\n", l);
+			l++;
 		}
 		/* sets count variables for next part */
 		l = 0;
@@ -45,6 +48,8 @@ int main(){
 		/* removes the used part of input */
 		for(j = 0; j < (sizeof(input) - i); j++){
 			input[j] = input[k];
+			printf("## j: %d\n", j);
+			printf("## k: %d\n", k);
 			k++;
 		}
 		/* adds the number to numbers */
