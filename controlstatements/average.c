@@ -28,13 +28,17 @@ int main(){
 	int numbers[51];	/* the numbers to be averaged */
 	int index = 0;			/* index of numbers*/
 	for(i = strlen(input); i >= 0; i--){
-		if(input[i] == ' '){
+		if(input[i] == ' ' || i == 0){
 			sscanf(input+i, "%d", &numbers[index]);
 			index++;
 			input[i] = '\0';
 		}
 	}
-	
+	// for(i = 0; i < (spaces + 1); i++){
+	// 		printf("## Numbers: ");
+	// 		printf("%d ",numbers[i]);
+	// 		printf("\n");
+	// 	}
 	/* gets the average */
 	float average = 0;
 	i = 0;
