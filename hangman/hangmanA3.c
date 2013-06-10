@@ -1,0 +1,154 @@
+//"You have to be able to do this and you have to go figure out how: read in the list of words in /usr/share/dict/words and print all the words that begin with a 'q'.  Go." -Matt Harris
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int printHangman(int);
+int hasUppercase(char[]);
+
+int main(){
+	srandomdev();
+	long int index;
+	int difficulty = 3;
+	char usrIn[5];
+	do{
+		printf("Enter a number between 3 (easy) and 6 (hard) to determind your difficulty: ");
+		fgets(usrIn, sizeof(usrIn), stdin);
+		sscanf(usrIn,"%d", &difficulty);
+	}while(difficulty > 6 || difficulty < 3);
+	char word[80];
+	char *errorCheck;
+	FILE * dictionary = fopen("/usr/share/dict/words", "r");
+	if(!dictionary){
+		printf("null dictionary\n");
+		return 1;
+	}
+	long int numberOfWords = 0;
+	
+	do{
+		errorCheck = fgets(word, sizeof(word), dictionary);
+		numberOfWords++;
+	}while(errorCheck);
+	int i;
+	int retry = 1;
+	
+	while(retry){
+		retry = 0;
+		rewind(dictionary);
+		index = (random() % (numberOfWords));
+		for(i = 0; i <=index; i++){
+			errorCheck = fgets(word, sizeof(word), dictionary);
+		}
+		if(strlen(word) < difficulty || hasUppercase(word)){
+			retry = 1;
+		}
+	}
+	
+	word[strlen(word) - 1] = '\0';
+	fclose(dictionary);
+	char incorrectLetters[26];
+	incorrectLetters[0] = '\0';
+	char guessResults[50];
+	for(i = 0; i < strlen(word); i++){
+		if(i == (strlen(word) - 1)){
+			guessResults[i] = '\0';
+		}else{
+			guessResults[i] = '_';
+		}
+	}
+	int restart = 0;
+	int correct = 0;
+	do{
+		printf("\n");
+		printHangman(strlen(incorrectLetters));
+		
+		printf("\nIncorrect Letters: ")
+		for(i = 0; i < strlen(incorrectLetters); i++){
+			printf("%c ", );
+		}
+		
+		printf("Your Guesses: ");
+		for(i = 0; i < strlen(guessResults); i++){
+			printf("%c ", guessResults[i]);
+		}
+		do{
+			printf("\nEnter a single, lowercase letter: ");
+			fgets(usrIn, sizeof(usrIn), stdin);
+			if(hasUppercase(usrIn) || strlen(usrIn) > 1){
+				printf("Please follow the correct input format.\n");
+			}
+		}while(hasUppercase(usrIn) || strlen(usrIn) > 1);
+		
+		for(i = 0; i < strlen(incorrectLetters)){
+			if(incorrectLetters[i] == usrIn[0]){
+				printf("You already guessed that!\n");
+				restart = 1;
+				break;
+			}
+		}
+		if(restart){
+			restart = 0;
+			continue;
+		}
+		for(i = 0; i < strlen(word); i++){
+			if(word[i] == usrIn[0]){
+				guessResults[i] = usrIn[0];
+				correct = 1;
+			}
+		}
+		if(!correct){
+			strcat(incorrectLetters, usrIn[0]);
+		}
+	}while(!strcmp(guessResults, word) && strlen(incorrectLetters) < 6);
+	if(strlen(incorrectLetters) <= 6){
+		printHangman(6);
+		printf("You Loose.\n");
+	}else{
+		printf("%s\n", guessResults);
+		printf("You Win!");
+	}
+	return 0;
+}
+
+int printHangman(int failures){
+	printf("\n----------+\n");
+	switch(failures){
+		case 0:
+			printf("|\n|\n|\n|\n|\n--------------\n\n");
+			break;
+		case 1:
+			printf("|		  O\n|\n|\n|\n|\n--------------\n\n");
+			break;
+		case 2:
+			printf("|		  O\n|	      |\n|	      |\n|	      ^\n|\n--------------\n\n");
+			break;
+		case 3:
+			printf("|		  O\n|      +--|\n|	      |\n|	      ^\n|\n--------------\n\n");
+			break;
+		case 4:
+			printf("|		  O\n|      +--|--+\n|	      |\n|	      ^\n|\n--------------\n\n");
+			break;
+		case 5:
+			printf("|		  O\n|      +--|--+\n|	      |\n|	      ^\n|        /\n--------------\n\n");
+			break;
+		case 6:
+			printf("|		  O\n|      +--|--+\n|	      |\n|	      ^\n|        / \\\n--------------\n\n");
+			break;
+		default:
+			printf("You're calling printHangman with an invalid number!");
+			return 1;
+			break;
+	}
+	return 0;
+}
+
+int hasUppercase(char word[]){
+	int i;
+	for(i = 0; i < strlen (word); i++){
+		if((int)word[i] >= 64 && (int)word[i] <= 90){
+			return 1;
+		}
+	}
+	return 0;
+}
