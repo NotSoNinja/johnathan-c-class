@@ -10,13 +10,13 @@ int notLowercase(char[]);
 int main(){
 	srandomdev();
 	long int index;
-	int difficulty = 3;
+	int difficulty;
 	char usrIn[5];
 	do{
 		printf("Enter a number between 3 (easy) and 6 (hard) to determind your difficulty: ");
 		fgets(usrIn, sizeof(usrIn), stdin);
 		sscanf(usrIn,"%d", &difficulty);
-	}while(difficulty > 6 || difficulty < 3);
+	}while((difficulty > 6) || (difficulty < 3));
 	
 	char word[80];
 	char *errorCheck;
@@ -32,19 +32,15 @@ int main(){
 		numberOfWords++;
 	}while(errorCheck);
 	int i;
-	int retry;
 	
 	do{
-		retry = 0;
 		rewind(dictionary);
 		index = (random() % (numberOfWords));
+		printf("## index: %d\n", index);
 		for(i = 0; i <=index; i++){
 			errorCheck = fgets(word, sizeof(word), dictionary);
 		}
-		if(strlen(word) < difficulty || notLowercase(word)){
-			retry = 1;
-		}
-	}while(retry);
+	}while((strlen(word) < difficulty) || (notLowercase(word)));
 	
 	word[strlen(word) - 1] = '\0';
 	fclose(dictionary);
@@ -159,8 +155,8 @@ int notLowercase(char word[]){
 	int i;
 	for(i = 0; i < strlen (word); i++){
 		if((int)word[i] >= 97 && (int)word[i] <= 122){
-			return 1;
+			return 0;
 		}
 	}
-	return 0;
+	return 1;
 }
