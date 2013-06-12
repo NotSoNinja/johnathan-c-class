@@ -56,7 +56,7 @@ int main(){
 	int correct = 0;
 	do{
 		correct = 0;
-		printf("## CHEAT!!  %s\n", word);
+		/*printf("## CHEAT!!  %s\n", word);  Now now, no cheating!*/
 		printf("\n");
 		printHangman(strlen(incorrectLetters));
 		
