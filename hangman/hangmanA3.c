@@ -13,7 +13,7 @@ int main(){
 	int difficulty;
 	char usrIn[5];
 	do{
-		printf("Enter a number between 3 (easy) and 6 (hard) to determind your difficulty: ");
+		printf("\nEnter a number between 3 (easy) and 6 (hard) to determine your difficulty: ");
 		fgets(usrIn, sizeof(usrIn), stdin);
 		sscanf(usrIn,"%d", &difficulty);
 	}while((difficulty > 6) || (difficulty < 3));
@@ -36,7 +36,6 @@ int main(){
 	do{
 		rewind(dictionary);
 		index = (random() % (numberOfWords));
-		printf("## index: %d\n", index);
 		for(i = 0; i <=index; i++){
 			errorCheck = fgets(word, sizeof(word), dictionary);
 		}
@@ -53,9 +52,10 @@ int main(){
 			guessResults[i] = '_';
 		}
 	}
-	int restart = 0;
+	int restart = 1;
 	int correct = 0;
 	do{
+		correct = 0;
 		printf("\n");
 		printHangman(strlen(incorrectLetters));
 		
@@ -83,14 +83,7 @@ int main(){
 					break;
 				}
 			}
-			printf("## Lowercase: %d restart: %d\n", notLowercase(usrIn), restart);
 		}while(notLowercase(usrIn) || restart);
-		
-		/*DEBUG*/
-		for(i = 0; i < strlen(incorrectLetters); i++){
-			printf("## incorrect array:%c\n", incorrectLetters[i]);
-		}
-		/*DEBUG*/
 		
 		for(i = 0; i < strlen(word); i++){
 			if(word[i] == usrIn[0]){
@@ -102,16 +95,10 @@ int main(){
 			strcat(incorrectLetters, usrIn);
 		}
 		
-		/*DEBUG*/
-		for(i = 0; i < strlen(incorrectLetters); i++){
-			printf("## incorrect array:%c\n", incorrectLetters[i]);
-		}
-		/*DEBUG*/
-		
-	}while(!strcmp(guessResults, word) && strlen(incorrectLetters) < 6);
-	if(strlen(incorrectLetters) <= 6){
+	}while(strcmp(guessResults, word) && strlen(incorrectLetters) < 6);
+	if(strlen(incorrectLetters) >= 6){
 		printHangman(6);
-		printf("You Loose.\n");
+		printf("You Loose.\nThe word was: %s.\n", word);
 	}else{
 		printf("%s\n", guessResults);
 		printf("You Win!");
@@ -129,7 +116,7 @@ int printHangman(int failures){
 			printf("|         O\n|\n|\n|\n|\n--------------\n\n");
 			break;
 		case 2:
-			printf("|         O\n|	       |\n|         |\n|         ^\n|\n--------------\n\n");
+			printf("|         O\n|         |\n|         |\n|         ^\n|\n--------------\n\n");
 			break;
 		case 3:
 			printf("|         O\n|      +--|\n|         |\n|         ^\n|\n--------------\n\n");
