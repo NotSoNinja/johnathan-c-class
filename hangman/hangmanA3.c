@@ -45,8 +45,8 @@ int main(){
 	fclose(dictionary);
 	char incorrectLetters[26] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
 	char guessResults[50];
-	for(i = 0; i < strlen(word); i++){
-		if(i == (strlen(word) - 1)){
+	for(i = 0; i <= strlen(word); i++){
+		if(i == (strlen(word))){
 			guessResults[i] = '\0';
 		}else{
 			guessResults[i] = '_';
@@ -56,6 +56,7 @@ int main(){
 	int correct = 0;
 	do{
 		correct = 0;
+		printf("## CHEAT!!  %s\n", word);
 		printf("\n");
 		printHangman(strlen(incorrectLetters));
 		
@@ -98,10 +99,10 @@ int main(){
 	}while(strcmp(guessResults, word) && strlen(incorrectLetters) < 6);
 	if(strlen(incorrectLetters) >= 6){
 		printHangman(6);
-		printf("You Loose.\nThe word was: %s.\n", word);
+		printf("You Lose.\nThe word was %s.\n", word);
 	}else{
-		printf("%s\n", guessResults);
-		printf("You Win!");
+		printf("\n%s\n", guessResults);
+		printf("You Win!\n\n");
 	}
 	return 0;
 }
