@@ -33,5 +33,12 @@ int main(int argc, char **argv) {
 		printf("%s\n", s);
 		curr = curr->next;
 	}
+	
+	while(curr && curr->prev){
+		s = curr->data;
+		printf("%s\n", s);
+		curr = curr ->prev;
+	}
+	
 	printf("%s\n", curr->data);
 }
