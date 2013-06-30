@@ -4,7 +4,7 @@
 #include "ll.h"
 
 int main(int argc, char **argv) {
-	
+	char *s;
 	char word[80];
 	int i;
 	char *errorCheck;
@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 		tempword = malloc(strlen(word) * sizeof(char));
 		word[strlen(word) - 1] = '\0';
 		strcpy(tempword, word);
-		head = add LLItem(head, tempword)
+		head = addLLItem(head, tempword);
 	}while(errorCheck);
 	
 	curr = head;
