@@ -1,9 +1,16 @@
 #include <stdlib.h>
 #include "stacknqueue.h"
 
+
+int arraysize(Stack *);
+
 int push(Stack *, void *); //add to front
 void *pop(Stack *); //remove from front
-int shift(Stack *, void *); //add to end
+int shift(Stack * target, void * data){//add to end
+	target->array[target->used] = data;
+	target->used++;
+	return target->used;
+} 
 void *unshift(Stack *); //remove from end
 
 Stack *makestack(int size){
@@ -15,8 +22,19 @@ Stack *makestack(int size){
 	return new;
 }
 
-int deletestack(Stack *);
-int arraysize(Stack *);
+int deletestack(Stack * target){
+	free(target->array);
+	free(target);
+	return 0;
+}
+
+int arraysize(Stack * target){
+	return target->used;
+}
+
+int totalarraylength(Stack * target){
+	return target->size;
+}
 
 // 
 // typedef struct st {
