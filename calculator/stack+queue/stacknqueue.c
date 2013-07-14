@@ -11,7 +11,7 @@ int push(Stack *target, void *data){ //add to front
 	}
 	target->array[i] = data;
 	target->used++;
-	return used;
+	return target->used;
 }
 
 

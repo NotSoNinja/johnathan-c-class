@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 typedef struct st {
-	void *array[];
 	int size;
 	int used;
+	void **array;
 } Stack;
 
 int push(Stack *, void *); //add to front
