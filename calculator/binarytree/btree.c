@@ -3,6 +3,7 @@
 #include "btree.h"
 
 void *removeNode(Btree *node){
+	printf("##Test again\n");
 	void *extracted = node->data;
 	Btree *current;
 	Btree *prev;
@@ -44,9 +45,9 @@ void *removeNode(Btree *node){
 int removeAll(Btree * node){
 	printf("##Test\n");
 	int errorcount = 0;
-	if(node->previous->left == node){
+	if(&(node->previous->left) == &node){
 		node->previous->left = 0;
-	}else if(node->previous->right == node){
+	}else if(&(node->previous->right) == &node){
 		node->previous->right = 0;
 	}else{
 		printf("Node->previous not set properly.\n");

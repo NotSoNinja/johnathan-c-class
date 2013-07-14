@@ -4,6 +4,7 @@
 int main(){
 	int values[] = {1,2,3,4};
 	int *out;
+	int otherout;
 	Btree *root;
 	root = insertNode(0, 'R', (values + 1));
 	printf("##checked 1\n");
@@ -12,8 +13,8 @@ int main(){
 	insertNode(root->left, 'L', (values + 4));
 	printf("##checked 2\n");
 	
-	*out = removeAll(root->left);
-	printf("0 if successfully deleted 2 and 4: %d\n", *out);
+	otherout = removeAll(root->left);
+	printf("0 if successfully deleted 2 and 4: %d\n", otherout);
 	
 	out = (int *)removeNode(root->right);
 	printf("3 if successfully deleted 3: %d\n", *out);
