@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "btree.h"
 
-void *removeNode(Btree * node){
+void *removeNode(Btree *node){
 	void *extracted = node->data;
 	Btree *current;
 	Btree *prev;
 	prev = node->previous;
 	if(prev->left == node){
-		node->left->prev = previous;
+		node->left->previous = prev;
 		prev->left = node->left;
 		//this is the questionable bit
 		if(prev->right){
@@ -41,6 +42,7 @@ void *removeNode(Btree * node){
 }
 
 int removeAll(Btree * node){
+	printf("##Test\n");
 	int errorcount = 0;
 	if(node->previous->left == node){
 		node->previous->left = 0;
@@ -50,10 +52,13 @@ int removeAll(Btree * node){
 		printf("Node->previous not set properly.\n");
 		return 1;
 	}
+	
 	if(node->left){
+		printf("recurse left\n");
 		errorcount += removeAll(node->left);
 	}
 	if(node->right){
+		printf("recurse right\n");
 		errorcount += removeAll(node->right);
 	}
 	free(node);
@@ -68,22 +73,14 @@ Btree *insertNode(Btree * node, char branch, void * data){
 	new->previous = node;
 	if(node){
 		switch (branch) {
-			case "L" : 
+			case 'l' : 
+			case 'L' : 
 				new->left = node->left;
 				node->left = new;
 				new->right = 0;
 				break;
-			case "l" : 
-				new->left = node->left;
-				node->left = new;
-				new->right = 0;
-				break;
-			case "R" : 
-				new->right = node->right;
-				node->right = new;
-				new->left = 0;
-				break;
-			case "r" : 
+			case 'R' : 
+			case 'r' : 
 				new->right = node->right;
 				node->right = new;
 				new->left = 0;

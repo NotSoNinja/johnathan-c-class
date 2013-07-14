@@ -23,6 +23,6 @@ int removeAll(Btree *);
 /* Args: node to add new node on to (0 for root), L or R branch of said node, data for the new node
  * Returns: 0 - no error, else error
  */
-int insertNode(Btree *, char, void *);
+Btree *insertNode(Btree *, char, void *);
 
 #endif

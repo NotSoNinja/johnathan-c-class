@@ -8,11 +8,7 @@ Stack *newStackItem(Stack *head, void *data){
 	Stack *new;
 	new = malloc(sizeof(Stack));
 	new->data = data;
-	if(head){
-		new->next = head;
-	}else{
-		new->next = head;
-	}
+	new->next = head;
 	top = new;
 	return new;
 	
