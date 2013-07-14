@@ -21,7 +21,11 @@ int shift(Stack * target, void * data){//add to end
 	return target->used;
 } 
 
-void *unshift(Stack *); //remove from end
+//remove from end
+void *unshift(Stack *stack) {
+	stack->used--;
+	return stack->array[stack->used];
+} 
 
 Stack *makestack(int size){
 	Stack *new;
