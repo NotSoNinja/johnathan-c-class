@@ -70,3 +70,12 @@ void *pop(Stack *stack) {
 	//Done!
 	return ret;
 }
+
+void *peekhead(Stack *stack){
+	void *ret;
+	ret = stack->array[0];
+	return ret;
+}
+void *peektail(Stack *stack){
+	return stack->array[arraysize(stack)];
+}

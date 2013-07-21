@@ -8,6 +8,7 @@
 int pemdas(char,char);
 
 char *shunt(char *rawin){
+	printf("##preim check.\n");
 	char input[100];
 	int index = 0;
 	Stack *tempstack = makestack(100);
@@ -16,13 +17,15 @@ char *shunt(char *rawin){
 	char tempchar;
 	
 	strcpy(input, rawin);
-	
+	printf("## First checkpoint.\n");
 	while(strlen(input)){
 		if((int)input[index] >= 48 && (int)input[index] <= 57){
+			printf("## Second checkpoint.\n");
 			output[outdex] = input[index];
 			outdex++;
+			printf("## Third checkpoint.\n");
 		}else if(input[index] == '('){
-			push(tempstack, input[index]);
+			push(tempstack, &input[index]);
 		}else if(input[index] == ')'){
 			while(*(char *)tempstack->array[0] != '('){
 				if(arraysize(tempstack)){
@@ -35,12 +38,16 @@ char *shunt(char *rawin){
 			}
 			pop(tempstack);
 		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/'){
-			tempchar = *(char *)tempstack->array[0];
+			printf("## Fourth checkpoint.\n");
+			tempchar = *(char *)peekhead(tempstack);
+			printf("## Fifth checkpoint.\n");
 			while(pemdas(tempchar, input[index])){
-				output[outdex] = pop(tempstack);
+				printf("## Sixth checkpoint.\n");
+				output[outdex] = *(char *)pop(tempstack);
 				outdex++;
 			}
-			push(tempstack, input[index]);
+			printf("## Seventh checkpoint.\n");
+			push(tempstack, &input[index]);
 		}else if(input[index] == '^'){
 			printf("Shunting Failed: exponent functionality unavailable.\n");
 			return 0;
@@ -55,33 +62,43 @@ char *shunt(char *rawin){
 		index++;
 	}
 	while(arraysize(tempstack)){
-		output[outdex] = pop(tempstack);
+		output[outdex] = *(char *)pop(tempstack);
 		outdex++;
 	}
 	
 	//this is where code to make output into a real queue would go.
-	return output;
+	strcpy(rawin,output);
+	return rawin;
 }
 
 int pemdas(char o1, char o2){
 	const char pemdas[] = "^*/+-";
+	char *onechar;
+	char *twochar;
 	int onedex;
 	int twodex;
-	onedex = strstr(o1, pemdas);
-	twodex = strstr(o2, pemdas);
-	if(onedex >=0){
-		if(twodex >=0){
+	onechar = index(pemdas, o1);
+	twochar = index(pemdas, o2);
+	onedex = pemdas-onechar;
+	twodex = pemdas - twochar;
+	// char *o1s, *o2s;
+	// 	sprintf(o1s, "%c", o1);
+	// 	sprintf(o2s, "%c", o2);
+	// 	onedex = strstr(o1s, pemdas);
+	// 	twodex = strstr(o2s, pemdas);
+	if(onedex >= 0){
+		if(twodex >= 0){
 			if(onedex >= twodex){
 				return 1;
 			}else{
 				return 0;
 			}
 		}else{
-			printf("PEMDAS Error 2.")
+			printf("PEMDAS Error 2.");
 			return 0;
 		}
 	}else{
-		printf("PEMDAS Error 1.")
+		printf("PEMDAS Error 1.");
 		return 0;
 	}
 	

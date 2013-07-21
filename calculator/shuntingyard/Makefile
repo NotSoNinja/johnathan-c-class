@@ -1,5 +1,5 @@
 test: test.o shuntyard.o stacknqueue.o
-	gcc -g test test.o shuntyard.o stacknqueue.o
+	gcc -g -o test test.o shuntyard.o stacknqueue.o
 
 test.o: test.c *.h
 	gcc -c test.c

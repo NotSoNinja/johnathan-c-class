@@ -13,6 +13,8 @@ int push(Stack *, void *); //add to front
 void *pop(Stack *); //remove from front
 int shift(Stack *, void *); //add to end
 void *unshift(Stack *); //remove from end
+void *peekhead(Stack *);
+void *peektail(Stack *);
 Stack *makestack(int);
 int deletestack(Stack *);
 int arraysize(Stack *);
