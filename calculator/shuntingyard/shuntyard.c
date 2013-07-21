@@ -35,9 +35,10 @@ char *shunt(char *rawin){
 		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/'){
 			if(arraysize(tempstack)){
 				tempchar = *(char *)peekhead(tempstack);
-				while(pemdas(tempchar, input[index])){
+				while(arraysize(tempstack) && pemdas(tempchar, input[index])){
 					output[outdex] = *(char *)pop(tempstack);
 					outdex++;
+					tempchar = *(char *)peekhead(tempstack);
 				}
 				push(tempstack, &input[index]);
 			}else{
@@ -78,10 +79,16 @@ int pemdas(char o1, char o2){
 	twodex *= -1;
 	if(onedex >= 0){
 		if(twodex >= 0){
-			if(onedex >= twodex){
+			if(onedex <= twodex){
 				return 1;
 			}else{
-				return 0;
+				if(onedex == 3 && twodex == 4){
+					return 1;
+				}else if(onedex == 1 && twodex == 2){
+					return 1;
+				}else{
+					return 0;
+				}
 			}
 		}else{
 			printf("PEMDAS Error 2.\n");

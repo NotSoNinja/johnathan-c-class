@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "stacknqueue.h"
 
 
@@ -23,6 +24,9 @@ int shift(Stack * target, void * data){//add to end
 
 //remove from end
 void *unshift(Stack *stack) {
+	if(stack->used <= 0){
+		printf("Woah, son. Outta Stack.");
+	}
 	stack->used--;
 	return stack->array[stack->used];
 } 
@@ -52,6 +56,9 @@ int totalarraylength(Stack * target){
 
 //Return the first element in the array and remove it from the array.
 void *pop(Stack *stack) {
+	if(stack->used <= 0){
+		printf("Woah, son. Outta Stack.");
+	}
 	int i;
 	void *ret;
 
@@ -69,6 +76,7 @@ void *pop(Stack *stack) {
 
 	//Done!
 	return ret;
+	
 }
 
 void *peekhead(Stack *stack){
