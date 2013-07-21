@@ -8,7 +8,6 @@
 int pemdas(char,char);
 
 char *shunt(char *rawin){
-	printf("##preim check.\n");
 	char input[100];
 	int index = 0;
 	Stack *tempstack = makestack(100);
@@ -17,13 +16,10 @@ char *shunt(char *rawin){
 	char tempchar;
 	
 	strcpy(input, rawin);
-	printf("## First checkpoint.\n");
-	while(strlen(input)){
+	while(index < strlen(input)){
 		if((int)input[index] >= 48 && (int)input[index] <= 57){
-			printf("## Second checkpoint.\n");
 			output[outdex] = input[index];
 			outdex++;
-			printf("## Third checkpoint.\n");
 		}else if(input[index] == '('){
 			push(tempstack, &input[index]);
 		}else if(input[index] == ')'){
@@ -32,27 +28,24 @@ char *shunt(char *rawin){
 					output[outdex] = *(char *)pop(tempstack);
 					outdex++;
 				}else{
-					printf("Shunting Failed: incorrect use of parentheses.\n");
 					return 0;
 				}
 			}
 			pop(tempstack);
 		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/'){
-			printf("## Fourth checkpoint.\n");
-			tempchar = *(char *)peekhead(tempstack);
-			printf("## Fifth checkpoint.\n");
-			while(pemdas(tempchar, input[index])){
-				printf("## Sixth checkpoint.\n");
-				output[outdex] = *(char *)pop(tempstack);
-				outdex++;
+			if(arraysize(tempstack)){
+				tempchar = *(char *)peekhead(tempstack);
+				while(pemdas(tempchar, input[index])){
+					output[outdex] = *(char *)pop(tempstack);
+					outdex++;
+				}
+				push(tempstack, &input[index]);
+			}else{
+				push(tempstack, &input[index]);
 			}
-			printf("## Seventh checkpoint.\n");
-			push(tempstack, &input[index]);
 		}else if(input[index] == '^'){
-			printf("Shunting Failed: exponent functionality unavailable.\n");
 			return 0;
 		}else if(input[index] == '%'){
-			printf("Shunting Failed: modulo functionality unavailable.\n");
 			return 0;
 		}else{
 			printf("Invalid syntax.");
@@ -81,11 +74,8 @@ int pemdas(char o1, char o2){
 	twochar = index(pemdas, o2);
 	onedex = pemdas-onechar;
 	twodex = pemdas - twochar;
-	// char *o1s, *o2s;
-	// 	sprintf(o1s, "%c", o1);
-	// 	sprintf(o2s, "%c", o2);
-	// 	onedex = strstr(o1s, pemdas);
-	// 	twodex = strstr(o2s, pemdas);
+	onedex *= -1;
+	twodex *= -1;
 	if(onedex >= 0){
 		if(twodex >= 0){
 			if(onedex >= twodex){
@@ -94,11 +84,11 @@ int pemdas(char o1, char o2){
 				return 0;
 			}
 		}else{
-			printf("PEMDAS Error 2.");
+			printf("PEMDAS Error 2.\n");
 			return 0;
 		}
 	}else{
-		printf("PEMDAS Error 1.");
+		printf("PEMDAS Error 1.\n");
 		return 0;
 	}
 	
