@@ -23,16 +23,17 @@ char *shunt(char *rawin){
 		}else if(input[index] == '('){
 			push(tempstack, &input[index]);
 		}else if(input[index] == ')'){
-			while(*(char *)tempstack->array[0] != '('){
+			while(*(char *)peekhead(tempstack) != '('){
 				if(arraysize(tempstack)){
 					output[outdex] = *(char *)pop(tempstack);
 					outdex++;
 				}else{
+					printf("You done goofed.\n");
 					return 0;
 				}
 			}
 			pop(tempstack);
-		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/' || input[index] == '^'){
+		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/'){
 			if(arraysize(tempstack)){
 				tempchar = *(char *)peekhead(tempstack);
 				while(arraysize(tempstack) && pemdas(tempchar, input[index])){
@@ -44,7 +45,11 @@ char *shunt(char *rawin){
 			}else{
 				push(tempstack, &input[index]);
 			}
+		}else if(input[index] == '^'){
+			printf("You done goofed.\n");
+			return 0;
 		}else if(input[index] == '%'){
+			printf("You done goofed.\n");
 			return 0;
 		}else{
 			printf("Invalid syntax.");
@@ -59,13 +64,12 @@ char *shunt(char *rawin){
 	}
 	
 	output[outdex] = '\0';
-	printf("## %s\n", output);
 	strcpy(rawin,output);
 	return rawin;
 }
 
 int pemdas(char o1, char o2){
-	const char pemdas[] = "^*/+-";
+	const char pemdas[] = "*/+-";
 	char *onechar;
 	char *twochar;
 	int onedex;
@@ -81,9 +85,9 @@ int pemdas(char o1, char o2){
 			if(onedex <= twodex){
 				return 1;
 			}else{
-				if(onedex == 3 && twodex == 4){
+				if(onedex == 2 && twodex == 2){
 					return 1;
-				}else if(onedex == 1 && twodex == 2){
+				}else if(onedex == 0 && twodex == 1){
 					return 1;
 				}else{
 					return 0;
