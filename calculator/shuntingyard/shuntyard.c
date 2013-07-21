@@ -5,6 +5,8 @@
 
 //PEMDAS
 
+int pemdas(char,char);
+
 char *shunt(char *rawin){
 	char input[100];
 	int index = 0;
@@ -12,6 +14,7 @@ char *shunt(char *rawin){
 	char output[100];
 	int outdex = 0;
 	char tempchar;
+	
 	strcpy(input, rawin);
 	
 	while(strlen(input)){
@@ -60,50 +63,74 @@ char *shunt(char *rawin){
 	return output;
 }
 
-
 int pemdas(char o1, char o2){
-	//only to be called with +, -, *, /, ^, %
-	if(o1 == o2){
-		return 1;
-	}else if(o1 == '+'){
+	const char pemdas[] = "^*/+-";
+	int onedex;
+	int twodex;
+	onedex = strstr(o1, pemdas);
+	twodex = strstr(o2, pemdas);
+	if(onedex >=0){
+		if(twodex >=0){
+			if(onedex >= twodex){
+				return 1;
+			}else{
+				return 0;
+			}
+		}else{
+			printf("PEMDAS Error 2.")
+			return 0;
+		}
+	}else{
+		printf("PEMDAS Error 1.")
 		return 0;
-	}else if(o1 == '-'){
-		return 0;
-	}else if(o1 == '*'){
-		if(o2 == '/'){
-			return 1;
-		}else if(o2 == '^'){
-			return 0;
-		}else if(o2 == '%'){
-			return 1;
-		}
-	}else if(o1 == '/'){
-		if(o2 == '*'){
-			return 1;
-		}else if(o2 == '^'){
-			return 0;
-		}else if(o2 == '%'){
-			return 1;
-		}
-	}else if(o1 == '%'){
-		if(o2 == '/'){
-			return 1;
-		}else if(o2 == '^'){
-			return 0;
-		}else if(o2 == '*'){
-			return 1;
-		}
-	}// removed 'cause I don't know how it should actually work
-	//  else if(o1 == '^'){
-	// 		if(o2 == '/'){
-	// 			return 1;
-	// 		}else if(o2 == '^'){
-	// 			return 0;
-	// 		}else if(o2 == '%'){
-	// 			return 1;
-	// 		}
-	// 	}
-	/*If it gets here, there's a problem*/
-	printf("Ya got problems in PEMDAS.\n");
-	return 0;
+	}
+	
 }
+
+// /*this is the confusing part*/
+// int pemdas(char o1, char o2){
+// 	//only to be called with +, -, *, /, ^, %
+// 	if(o1 == o2){
+// 		return 1;
+// 	}else if(o1 == '+'){
+// 		return 0;
+// 	}else if(o1 == '-'){
+// 		return 0;
+// 	}else if(o1 == '*'){
+// 		if(o2 == '/'){
+// 			return 1;
+// 		}else if(o2 == '^'){
+// 			return 0;
+// 		}else if(o2 == '%'){
+// 			return 1;
+// 		}
+// 	}else if(o1 == '/'){
+// 		if(o2 == '*'){
+// 			return 1;
+// 		}else if(o2 == '^'){
+// 			return 0;
+// 		}else if(o2 == '%'){
+// 			return 1;
+// 		}
+// 	}else if(o1 == '%'){
+// 		if(o2 == '/'){
+// 			return 1;
+// 		}else if(o2 == '^'){
+// 			return 0;
+// 		}else if(o2 == '*'){
+// 			return 1;
+// 		}
+// 	}// removed 'cause I don't know how it should actually work
+// 	//  else if(o1 == '^'){
+// 	// 		if(o2 == '/'){
+// 	// 			return 1;
+// 	// 		}else if(o2 == '^'){
+// 	// 			return 0;
+// 	// 		}else if(o2 == '%'){
+// 	// 			return 1;
+// 	// 		}
+// 	// 	}
+// 	/*If it gets here, there's a problem*/
+// 	printf("Ya got problems in PEMDAS.\n");
+// 	return 0;
+// }
