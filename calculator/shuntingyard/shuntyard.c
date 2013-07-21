@@ -32,7 +32,7 @@ char *shunt(char *rawin){
 				}
 			}
 			pop(tempstack);
-		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/'){
+		}else if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/' || input[index] == '^'){
 			if(arraysize(tempstack)){
 				tempchar = *(char *)peekhead(tempstack);
 				while(arraysize(tempstack) && pemdas(tempchar, input[index])){
@@ -44,8 +44,6 @@ char *shunt(char *rawin){
 			}else{
 				push(tempstack, &input[index]);
 			}
-		}else if(input[index] == '^'){
-			return 0;
 		}else if(input[index] == '%'){
 			return 0;
 		}else{
@@ -60,7 +58,8 @@ char *shunt(char *rawin){
 		outdex++;
 	}
 	
-	//this is where code to make output into a real queue would go.
+	output[outdex] = '\0';
+	printf("## %s\n", output);
 	strcpy(rawin,output);
 	return rawin;
 }
