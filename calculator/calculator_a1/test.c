@@ -16,9 +16,8 @@ int main(int argc, char **argv){
 	revpolish = shunt(argv[1]);
 	int poledex = strlen(revpolish);
 	poledex--;
-	printf("##Poledex %d\n", poledex);
 	//put this into a tree
-	head = processIt(revpolish, poledex, 0);	
+	head = processIt(revpolish, poledex, 0);
 	//traverse the tree and do math
 	traverse(head);
 	printf("Solution: %d\n", *(int *)head->data);
@@ -29,8 +28,10 @@ Btree *processIt(char *pole, int poledex, Btree *node){
 	int locdex = poledex - 1;
 
 	if(poledex < 0){
+		/*base*/
 		return 0;
-	}else if(pole[poledex + 1] - 48 <=9 && pole[poledex + 1] - 48 >= 0){
+	}else if(pole[poledex + 1] - 48 <= 9 && pole[poledex + 1] - 48 >= 0 && node->previous != 0){
+		/*If the last placed was a number, don't place nodes of the numbers' node*/
 		node = node->previous;
 		if(node->left && node->right){
 			processIt(pole, poledex, node->previous);
@@ -42,9 +43,11 @@ Btree *processIt(char *pole, int poledex, Btree *node){
 			processIt(pole, locdex, (temp));
 		}
 	}else if(!node){
+		/*creates the head*/
 		temp = insertNode(0,0,(pole+poledex));
 		processIt(pole, locdex, (temp));
 	}else{
+		/*for non-special cases*/
 		if(node->left && node->right){
 			processIt(pole, poledex, node->previous);
 		}else if(node->right){
@@ -71,7 +74,7 @@ void traverse(Btree *nub){
 	}
 	//use function pointer to do function on data in this branch
 	printIt(nub);
-	(*function)(nub);
+	//(*function)(nub);
 }
 
 
@@ -93,7 +96,6 @@ void math(Btree *node){
 			temp += *(int *)(node->left->data);
 			temp += *(int *)(node->right->data);
 			numbers[numdex] = temp;
-			printf("##temp %f\n", temp);
 			node->data = numbers + numdex;
 			numdex++;
 			break;
@@ -128,6 +130,7 @@ void math(Btree *node){
 			if(!node->data){
 				printf("Null value error.\n");
 			}else{
+				printf("As char: %c  As int: %d\n", *(char *)node ->data, *(int *)node->data);
 				numbers[numdex] = (*(int *)node->data) - 48;
 				node->data = numbers + numdex;
 				printf("## Check %f\n\n", numbers[numdex]);
