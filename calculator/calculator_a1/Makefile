@@ -2,16 +2,16 @@ test: test.o shuntyard.o stacknqueue.o btree.o
 	gcc -g -o test test.o shuntyard.o stacknqueue.o btree.o
 
 test.o: test.c *.h
-	gcc -c test.c
+	gcc -g -c test.c
 
 btree.o: btree.c *.h
-	gcc -c btree.c
+	gcc -g -c btree.c
 
 shuntyard.o: shuntyard.c *.h
-	gcc -c shuntyard.c
+	gcc -g -c shuntyard.c
 
 stacknqueue.o: stacknqueue.c *.h
-	gcc -c stacknqueue.c
+	gcc -g -c stacknqueue.c
 
 clean:
 	rm -f *.o test

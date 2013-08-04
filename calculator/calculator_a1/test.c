@@ -1,104 +1,117 @@
-#include "shuntyard.h"
-#include "stacknqueue.h"
-#include "btree.h"
+/*add function to tree code to visit each node in a depth first left to right self traversal, executes arbitrary function on each node visited*/
 #include <stdio.h>
+#include "stacknqueue.h"
+#include "shuntyard.h"
+#include "btree.h"
+
+void printIt(Btree *);
+void traverse(Btree *);
+Btree *processIt(char *, int, Btree*);
+void math(Btree *);
 
 int main(int argc, char **argv){
-	//variables
-	Stack *qstack = makestack(100);
-	Btree *parser;
-	Btree *node;
-	int loop;
-	int L, R;
-	int values[100];
-	int valdex;
-	char temp;
-	char last;
-	char *shunted;
-	int converted;
-	shunted = shunt(argv[1]);
-	int i;
-	printf("%s\n", shunted);
-	while(strlen(shunted+i)){
-		push(qstack, (shunted+i));
-	}
-	
-	//section adds to tree, as both chars and ints for easy use later
-	last = *(char *)pop(qstack);
-	parser = insertNode(0,'\0', &last);
-	node = parser;
-	while(arraysize(qstack)){
-		temp = *(int *)pop(qstack);
-		if((int)temp <= 48 && (int)temp >= 57){
-			if(((int)last <= 48) && ((int)last >= 57)){
-				values[valdex] = (int)temp - 48;
-				node = insertNode(parser, 'L', values+valdex);
-				valdex++;
-			}else{
-				values[valdex] = (int)temp - 48;
-				node = insertNode(parser, 'R', values+valdex);
-				valdex++;
-			}
+	Btree *head;
+	//gets and shunts input
+	char *revpolish;
+	revpolish = shunt(argv[1]);
+	int poledex = strlen(revpolish);
+	poledex--;
+	//put this into a tree
+	head = processIt(revpolish, poledex, 0);	
+	//traverse the tree and do math
+	traverse(head);
+	printf("Solution: %d", *(int *)head->data);
+}
+
+Btree *processIt(char *pole, int poledex, Btree *node){
+	Btree *temp;
+	int locdex = --poledex;
+	if(poledex < 0){
+		return 0;
+	}else if(!node){
+		temp = insertNode(0,0,(pole+poledex));
+		processIt(pole, locdex, (temp));
+	}else{
+		if(node->left && node->right){
+			processIt(pole, poledex, node->previous);
+		}else if(node->right){
+			temp = insertNode(node, 'L', (pole+poledex));
+			processIt(pole, locdex, (temp));
 		}else{
-			if((int)last <= 48 && (int)last >= 57){
-				loop = 1;
-				while(loop){
-					if(node->previous->left){
-						if(node->previous != 0){
-							node = node->previous;
-						}else{
-							printf("Fatal Error.\n");
-							return 1;
-						}
-					}else{
-						loop = 0;
-						node = insertNode(node->previous, 'L', &temp);
-					}
-				}
-			}else{
-				node = insertNode(parser, 'R', &temp);
-			}
+			temp = insertNode(node, 'R', (pole+poledex));
+			processIt(pole, locdex, (temp));
 		}
-		last = temp;
 	}
-	
-	//section does math based on tree
-	node = parser->right;
-	while(node->right->right){
-		node = node->right;
+	return temp;
+}
+
+void traverse(Btree *nub){
+	//decides the function to be executed
+	void (*function)(Btree *);
+	function = &printIt;
+	//call traverse on other branches if they exist: left and depth before right
+	if(nub->left){
+		traverse(nub->left);
 	}
-	do{
-		printf("loop.\n");
-		if(node->left->left){
-			node = node->left;
-		}else{
-			R = *(int *)removeNode(node->right);
-			L = *(int *)removeNode(node->left);
-			temp = *(char *)node->data;
-			if(temp == '+'){
-				values[valdex] = L + R;
-				node->data = values+valdex;
-			}else if(temp = '-'){
-				values[valdex] = L - R;
-				node->data = values+valdex;
-			}else if(temp = '*'){
-				values[valdex] = L * R;
-				node->data = values+valdex;
-			}else if(temp = '/'){
-				values[valdex] = L / R;
-				node->data = values+valdex;
+	if(nub->right){
+		traverse(nub->right);
+	}
+	//use function pointer to do function on data in this branch
+	(*function)(nub);
+}
+
+
+void printIt(Btree *node){
+	printf("Node %p\n", node);
+	printf("Left %p\tRight %p\n", node->left, node -> right);
+	printf("Data: %c\n\n", *(char *)(node->data));
+}
+
+void math(Btree *node){
+	static float res = 0;
+	static float numbers[100];
+	static int numdex = 0;
+	float temp = 0;
+	char data = *(char *)(node->data);
+	switch(data){
+		case '+': 
+			temp += *(int *)(node->left->data);
+			res += *(int *)(node->right->data);
+			numbers[numdex] = temp;
+			node->data = numbers + numdex;
+			numdex++;
+			break;
+		case '-': break;
+			temp += *(int *)(node->left->data);
+			temp -= *(int *)(node->right->data);
+			numbers[numdex] = temp;
+			node->data = numbers + numdex;
+			numdex++;
+			break;
+		case '*': 
+			temp += *(int *)(node->left->data);
+			temp *= *(int *)(node->right->data);
+			numbers[numdex] = temp;
+			node->data = numbers + numdex;
+			numdex++;
+			break;
+		case '/': 
+			temp += *(int *)(node->left->data);
+			if(*(int *)(node->right->data)){
+				temp /= *(int *)(node->right->data);
 			}else{
-				printf("Invalid operator.\n");
-				return 2;
+				printf("Error: division by zero;");
+				temp = 0;
 			}
-			if(node->previous){
-				node = node->previous;
-			}else{
-				printf("Done.\n");
-				printf("Solution: %d\n", *(int *)node->data);
+			numbers[numdex] = temp;
+			node->data = numbers + numdex;
+			numdex++;
+			break;
+		default:
+			//it should alteady be a number
+			if(!node->data){
+				printf("Null value error.\n");
 			}
-		}
-	}while(node->previous || node->left);
-	
-	return 0;
+			break;
+	}
 }
