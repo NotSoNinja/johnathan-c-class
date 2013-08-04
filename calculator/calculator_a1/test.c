@@ -5,7 +5,7 @@
 #include "btree.h"
 
 void printIt(Btree *);
-void traverse(Btree *);
+void traverse(Btree *, void(*function)(Btree *));
 Btree *processIt(char *, int, Btree*);
 void math(Btree *);
 
@@ -19,7 +19,8 @@ int main(int argc, char **argv){
 	//put this into a tree
 	head = processIt(revpolish, poledex, 0);
 	//traverse the tree and do math
-	traverse(head);
+	traverse(head, &printIt);
+	traverse(head, &math);
 	printf("Solution: %d\n", *(int *)head->data);
 }
 
@@ -61,19 +62,18 @@ Btree *processIt(char *pole, int poledex, Btree *node){
 	return temp;
 }
 
-void traverse(Btree *nub){
-	//decides the function to be executed
-	void (*function)(Btree *);
-	function = &math;
+void traverse(Btree *nub, void(*function)(Btree *)){
 	//call traverse on other branches if they exist: left and depth before right
 	if(nub->left){
-		traverse(nub->left);
+		traverse(nub->left, &printIt);
+		traverse(nub->left, &math);
 	}
 	if(nub->right){
-		traverse(nub->right);
+		traverse(nub->right, &printIt);
+		traverse(nub->right, &math);
 	}
 	//use function pointer to do function on data in this branch
-	printIt(nub);
+	(*function)(nub);
 	//(*function)(nub);
 }
 
