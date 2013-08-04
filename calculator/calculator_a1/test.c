@@ -65,12 +65,10 @@ Btree *processIt(char *pole, int poledex, Btree *node){
 void traverse(Btree *nub, void(*function)(Btree *)){
 	//call traverse on other branches if they exist: left and depth before right
 	if(nub->left){
-		traverse(nub->left, &printIt);
-		traverse(nub->left, &math);
+		traverse(nub->left, (*function));
 	}
 	if(nub->right){
-		traverse(nub->right, &printIt);
-		traverse(nub->right, &math);
+		traverse(nub->right, (*function));
 	}
 	//use function pointer to do function on data in this branch
 	(*function)(nub);
@@ -90,7 +88,7 @@ void math(Btree *node){
 	static int numdex = 0;
 	float temp = 0;
 	char data = *(char *)(node->data);
-	printf("%c\n", data);
+	//printf("%c\n", data);
 	switch(data){
 		case '+': 
 			temp += *(int *)(node->left->data);
@@ -130,10 +128,10 @@ void math(Btree *node){
 			if(!node->data){
 				printf("Null value error.\n");
 			}else{
-				printf("As char: %c  As int: %d\n", *(char *)node ->data, *(int *)node->data);
+				//printf("As char: %c  As int: %d\n", *(char *)node ->data, *(int *)node->data);
 				numbers[numdex] = (*(int *)node->data) - 48;
 				node->data = numbers + numdex;
-				printf("## Check %f\n\n", numbers[numdex]);
+				//printf("## Check %f\n\n", numbers[numdex]);
 				numdex++;
 			}
 			break;
