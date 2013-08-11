@@ -8,25 +8,32 @@ void printIt(Btree *);
 void traverse(Btree *, void(*function)(Btree *));
 Btree *processIt(char *, int, Btree*);
 void math(Btree *);
+char *ftoa(float);
 
 int main(int argc, char **argv){
 	Btree *head;
 	//gets and shunts input
 	char *revpolish;
 	revpolish = shunt(argv[1]);
-	int poledex = strlen(revpolish);
-	poledex--;
+	// printf("Reverse polish input: %s\n", revpolish);
+	int poledex = strlen(revpolish) - 1;
 	//put this into a tree
 	head = processIt(revpolish, poledex, 0);
 	//traverse the tree and do math
 	traverse(head, &printIt);
 	traverse(head, &math);
-	printf("Solution: %d\n", *(int *)head->data);
+	printf("Solution: %f\n", atof((char *)head->data));
 }
 
 Btree *processIt(char *pole, int poledex, Btree *node){
 	Btree *temp;
 	int locdex = poledex - 1;
+	//printf("Poledex: %d\n", poledex);
+
+	char *data;
+	data = malloc(sizeof(char) * 2);
+	*data = pole[poledex];
+	*(data + 1) = 0;
 
 	if(poledex < 0){
 		/*base*/
@@ -37,25 +44,26 @@ Btree *processIt(char *pole, int poledex, Btree *node){
 		if(node->left && node->right){
 			processIt(pole, poledex, node->previous);
 		}else if(node->right){
-			temp = insertNode(node, 'L', (pole+poledex));
+			temp = insertNode(node, 'L', (data));
 			processIt(pole, locdex, (temp));
 		}else{
-			temp = insertNode(node, 'R', (pole+poledex));
+			temp = insertNode(node, 'R', (data));
 			processIt(pole, locdex, (temp));
 		}
 	}else if(!node){
 		/*creates the head*/
-		temp = insertNode(0,0,(pole+poledex));
+		temp = insertNode(0,0,(data));
 		processIt(pole, locdex, (temp));
+		// printf("Created head with data: %s\n", data);
 	}else{
 		/*for non-special cases*/
 		if(node->left && node->right){
 			processIt(pole, poledex, node->previous);
 		}else if(node->right){
-			temp = insertNode(node, 'L', (pole+poledex));
+			temp = insertNode(node, 'L', (data));
 			processIt(pole, locdex, (temp));
 		}else{
-			temp = insertNode(node, 'R', (pole+poledex));
+			temp = insertNode(node, 'R', (data));
 			processIt(pole, locdex, (temp));
 		}
 	}
@@ -91,36 +99,36 @@ void math(Btree *node){
 	//printf("%c\n", data);
 	switch(data){
 		case '+': 
-			temp += *(int *)(node->left->data);
-			temp += *(int *)(node->right->data);
+			temp += atof((char *)(node->left->data));
+			temp += atof((char *)(node->right->data));
 			numbers[numdex] = temp;
-			node->data = numbers + numdex;
+			node->data = ftoa(numbers[numdex]);
 			numdex++;
 			break;
 		case '-': break;
-			temp += *(int *)(node->left->data);
-			temp -= *(int *)(node->right->data);
+			temp += atof((char *)(node->left->data));
+			temp -= atof((char *)(node->right->data));
 			numbers[numdex] = temp;
-			node->data = numbers + numdex;
+			node->data = ftoa(numbers[numdex]);
 			numdex++;
 			break;
 		case '*': 
-			temp += *(int *)(node->left->data);
-			temp *= *(int *)(node->right->data);
+			temp += atof((char *)(node->left->data));
+			temp *= atof((char *)(node->right->data));
 			numbers[numdex] = temp;
-			node->data = numbers + numdex;
+			node->data = ftoa(numbers[numdex]);
 			numdex++;
 			break;
 		case '/': 
-			temp += *(int *)(node->left->data);
-			if(*(int *)(node->right->data)){
-				temp /= *(int *)(node->right->data);
+			temp += atof((char *)(node->left->data));
+			if(atof((char *)(node->right->data))){
+				temp /= atof((char *)(node->right->data));
 			}else{
 				printf("Error: division by zero;");
 				temp = 0;
 			}
 			numbers[numdex] = temp;
-			node->data = numbers + numdex;
+			node->data = ftoa(numbers[numdex]);
 			numdex++;
 			break;
 		default:
@@ -129,11 +137,23 @@ void math(Btree *node){
 				printf("Null value error.\n");
 			}else{
 				//printf("As char: %c  As int: %d\n", *(char *)node ->data, *(int *)node->data);
-				numbers[numdex] = (*(int *)node->data) - 48;
-				node->data = numbers + numdex;
-				//printf("## Check %f\n\n", numbers[numdex]);
+				//numbers[numdex] = atof((char *)node->data);
+				//node->data = (numbers + numdex);
+				//printf("## Check %s\n\n", numbers[numdex]);
+				//printf("## Check %f\n\n", atof((char *)node->data));
 				numdex++;
 			}
 			break;
 	}
+}
+
+char *ftoa(float f){
+	//an imperfect implementation to be sure.
+	//printf("ftoa input %f\n", f);
+	char *string;
+	int stringdex = 0;
+	string = malloc(sizeof(char) * 20);
+	sprintf(string, "%f",f);
+
+	return string;
 }
