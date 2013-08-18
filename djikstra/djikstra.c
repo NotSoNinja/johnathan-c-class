@@ -2,6 +2,9 @@
 #include <stdlib.h>
 
 int traverse(int array[7][7], int loc, int target, int dist,int init, int *distances){
+	/* DEFUNCT! DO NOT USE */
+	/* returns 0 every time on purpose */
+	return 0;
 	int i;
 	static int disdex;
 	disdex = init;
@@ -25,6 +28,53 @@ int traverse(int array[7][7], int loc, int target, int dist,int init, int *dista
 	}
 	
 	return dist;
+}
+
+int traverse2(int array[7][7], int start, int end, int *visited, int visitsize, int visdex, int distance){
+	int i;
+	int tempdistance = 0;
+	int tempvisited[49];
+	for(i = 0; i < 49; i++){
+		tempvisited[i] = visited[i];
+	}
+	int options[7];
+	if(contains(start, visited, visitsize)){
+		//printf("Already visited here.\n");
+		return 0;
+	}else if(start == end){
+		visited[visdex] = end;
+		visdex++;
+		printf("Path: start --> ");
+		for(i = 0; i < visdex; i++){
+			printf("%d --> ", visited[i]);
+		}
+		printf("end\n");
+		//printf("distance: %d\n", distance);
+		return distance;
+	}else{
+		//printf("Continuing from %d\n", start);
+		tempvisited[visdex] = start;
+		visdex++;
+		for(i = 0; i < 7; i++){
+			//printf("%d ", i);
+			tempdistance = 0;
+			if(array[start][i] > 0){
+				//printf("true\n");
+				tempdistance = distance + array[start][i];
+				//printf("distance: %d, array: %d\n", distance, array[start][i]);
+				options[i] = traverse2(array, i, end, tempvisited, visitsize, visdex, tempdistance);
+			}
+			//printf("\n");
+		}
+		tempdistance = 100;
+		for(i = 0; i < 7; i++){
+			//printf("%d\n", tempdistance);
+			if(options[i] > 0 && options[i] < tempdistance){
+				tempdistance = options[i];
+			}
+		}
+		return tempdistance;
+	}
 }
 
 int arrcmp(int *array, int length, int compare){
@@ -59,4 +109,14 @@ int selectleast(int *distances, int size){
 		}
 	printarray(distances, size);
 	return temp;
+}
+
+int contains(int i, int *array, int size){
+	int j;
+	for(j = 0; j < size; j++){
+		if(array[i] == i){
+			return 1;
+		}
+	}
+	return 0;
 }

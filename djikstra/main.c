@@ -16,8 +16,8 @@ int main(){
 		{-1,-1,-1,7,-1,2,0}
 	};
 
-
-	int shortpath = traverse(array, start, target, 0, 0, distances);
+	int visited[49] = {-1};
+	int shortpath = traverse2(array, start, target, visited, 49, 0, 0);
 	
 	printf("The shortest distance from %d to %d is %d\n", start, target, shortpath);
 	return 0;

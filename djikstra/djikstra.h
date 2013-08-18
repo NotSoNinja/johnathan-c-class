@@ -6,3 +6,4 @@ int traverse(int [7][7], int, int, int, int, int *);
 int arrcmp(int *, int, int);
 int printarray(int *, int);
 int selectleast(int *, int);
+int traverse2(int [7][7], int, int, int *, int, int, int);

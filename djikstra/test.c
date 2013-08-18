@@ -22,9 +22,14 @@ int main(){
 		{ 1,-1,-1,-1,-1, 0,-1},
 		{ 1,-1,-1,-1,-1,-1, 0}
 	};
-	int a = traverse(array3, 0, 6, 0, 0, distances);
-	a = selectleast(distances, 100);
-	printf("the shortest distance between 1 and 6 is 1\n");
+	int visited[49] = {-1};
+	int a = traverse2(array3, 0, 6, visited, 49, 0, 0);
+	printf("%d\n", a);
+	printf("the shortest distance between 0 and 6 is 1\n");
 	assert(1 == a);
+	// a = traverse(array3, 0, 6, 0, 0, distances);
+	// a = selectleast(distances, 100);
+	// printf("the shortest distance between 0 and 6 is 1\n");
+	// assert(1 == a);
 	return 0;
 }
