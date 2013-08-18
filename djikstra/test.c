@@ -19,6 +19,13 @@ int main(){
 	printf("the array doesn't have a 3 in it\n");
 	c = contains(3, container, 4);
 	assert(0 == c);
+	printf("this larger and more vaired collection has 2 sevens.\n");
+	int fancycontainer[12] = {1,2,5,6,7,8,9,10,11,12,15,7};
+	c = contains(7, fancycontainer, 12);
+	assert(1 == c);
+	printf("fancycontainer, however, has no 3\n");
+	c = contains(3, fancycontainer, 12);
+	assert(c == 0);
 
 	int start = 0;
 	int target = 6;
