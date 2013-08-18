@@ -12,3 +12,7 @@ test.o: test.c djikstra.h
 
 djikstra.o: djikstra.c djikstra.h
 	gcc -g -c djikstra.c
+
+clean:
+	rm -f *.o main
+	
