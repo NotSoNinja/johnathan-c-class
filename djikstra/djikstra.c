@@ -33,11 +33,14 @@ int traverse(int array[7][7], int loc, int target, int dist,int init, int *dista
 int traverse2(int array[7][7], int start, int end, int *visited, int visitsize, int visdex, int distance){
 	int i;
 	int tempdistance = 0;
+	int tempvisdex = visdex;
 	int tempvisited[49];
 	for(i = 0; i < 49; i++){
 		tempvisited[i] = visited[i];
 	}
 	int options[7];
+	//printf("Is current node (%d) already visited: %d\n", start, contains(start, visited, visitsize));
+	//printarray(visited, visdex, "visited");
 	if(contains(start, visited, visitsize)){
 		//printf("Already visited here.\n");
 		return 0;
@@ -53,8 +56,9 @@ int traverse2(int array[7][7], int start, int end, int *visited, int visitsize, 
 		return distance;
 	}else{
 		//printf("Continuing from %d\n", start);
-		tempvisited[visdex] = start;
-		visdex++;
+		tempvisited[tempvisdex] = start;
+		tempvisdex++;
+		//printarray(tempvisited, tempvisdex, "visited");
 		for(i = 0; i < 7; i++){
 			//printf("%d ", i);
 			tempdistance = 0;
@@ -62,13 +66,13 @@ int traverse2(int array[7][7], int start, int end, int *visited, int visitsize, 
 				//printf("true\n");
 				tempdistance = distance + array[start][i];
 				//printf("distance: %d, array: %d\n", distance, array[start][i]);
-				options[i] = traverse2(array, i, end, tempvisited, visitsize, visdex, tempdistance);
+				options[i] = traverse2(array, i, end, tempvisited, visitsize, tempvisdex, tempdistance);
 			}
 			//printf("\n");
 		}
 		tempdistance = 100;
 		for(i = 0; i < 7; i++){
-			//printf("%d\n", tempdistance);
+			printf("%d\n", tempdistance);
 			if(options[i] > 0 && options[i] < tempdistance){
 				tempdistance = options[i];
 			}
@@ -87,10 +91,10 @@ int arrcmp(int *array, int length, int compare){
 	return 0;
 }
 
-int printarray(int *array, int size){
+int printarray(int *array, int size, char *name){
 	int i;
 	for(i = 0; i <= size; i++){
-		printf("Distances[%d]: %d\n",i, array[i]);
+		printf("%s[%d]: %d\n",name, i, array[i]);
 	}
 
 	return 0;
@@ -107,14 +111,14 @@ int selectleast(int *distances, int size){
 				}
 			}
 		}
-	printarray(distances, size);
+	printarray(distances, size, "distances");
 	return temp;
 }
 
 int contains(int i, int *array, int size){
 	int j;
 	for(j = 0; j < size; j++){
-		if(array[i] == i){
+		if(array[j] == i){
 			return 1;
 		}
 	}
