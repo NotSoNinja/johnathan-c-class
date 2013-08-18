@@ -31,5 +31,19 @@ int main(){
 	// a = selectleast(distances, 100);
 	// printf("the shortest distance between 0 and 6 is 1\n");
 	// assert(1 == a);
+	int array4[7][7] = {
+		{ 0,-1,-1,-1,-1, 2, 1},
+		{-1, 0,-1, 1,-1, 3,-1},
+		{-1,-1, 0,-1,-1,-1,-1},
+		{-1, 1,-1, 0,-1,-1, 1},
+		{-1,-1,-1,-1, 0,-1,-1},
+		{ 2, 3,-1,-1,-1, 0,-1},
+		{ 1,-1,-1, 1,-1,-1, 0}
+	};
+	int visited2[49] = {-1};
+	a = traverse2(array4, 0, 1, visited2, 49, 0, 0);
+	printf("%d\n", a);
+	printf("the shortest distance between 0 and 1 is 3\n");
+	assert(3 == a);
 	return 0;
 }
