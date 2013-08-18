@@ -11,6 +11,15 @@ int main(){
 	int array2[6] = {2,3,5,11,7,18};
 	assert(arrcmp(array2, 5, 1));
 	int *distances = malloc(sizeof(int) * 100);
+
+	int container[4] = {1};
+	printf("the array has a 1 in it.\n");
+	int c = contains(1, container, 4);
+	assert(1 == c);
+	printf("the array doesn't have a 3 in it\n");
+	c = contains(3, container, 4);
+	assert(0 == c);
+
 	int start = 0;
 	int target = 6;
 	int array3[7][7] = {
