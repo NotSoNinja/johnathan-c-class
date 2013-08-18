@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "djikstra.h"
 
 int traverse(int array[7][7], int loc, int target, int dist,int init, int *distances){
 	/* DEFUNCT! DO NOT USE */
@@ -39,7 +40,7 @@ int traverse2(int array[7][7], int start, int end, int *visited, int visitsize, 
 		tempvisited[i] = visited[i];
 	}
 	int options[7];
-	//printf("Is current node (%d) already visited: %d\n", start, contains(start, visited, visitsize));
+	printf("Is current node (%d) already visited: %d\n", start, contains(start, visited, visitsize));
 	//printarray(visited, visdex, "visited");
 	if(contains(start, visited, visitsize)){
 		//printf("Already visited here.\n");
@@ -55,7 +56,7 @@ int traverse2(int array[7][7], int start, int end, int *visited, int visitsize, 
 		//printf("distance: %d\n", distance);
 		return distance;
 	}else{
-		//printf("Continuing from %d\n", start);
+		printf("Continuing from %d\n", start);
 		tempvisited[tempvisdex] = start;
 		tempvisdex++;
 		//printarray(tempvisited, tempvisdex, "visited");
